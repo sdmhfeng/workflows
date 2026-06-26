@@ -36,6 +36,7 @@ venv/
 # Temp files
 *.tmp.*
 *.tmp
+*.zip
 
 # OS
 .DS_Store
