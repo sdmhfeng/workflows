@@ -25,21 +25,41 @@ jobs:
       - name: Setup Android SDK
         uses: android-actions/setup-android@v3
 
-      - name: Install required Android SDK packages
+      - name: Debug environment
         run: |
-          yes | ${ANDROID_SDK_ROOT}/cmdline-tools/latest/bin/sdkmanager --licenses 2>/dev/null || true
-          ${ANDROID_SDK_ROOT}/cmdline-tools/latest/bin/sdkmanager \
-            "platforms;android-34" \
-            "build-tools;34.0.0" \
-            "platform-tools" \
-            2>/dev/null || true
+          echo "ANDROID_HOME=$ANDROID_HOME"
+          echo "ANDROID_SDK_ROOT=$ANDROID_SDK_ROOT"
+          echo "JAVA_HOME=$JAVA_HOME"
+          java -version
+          ls -la $ANDROID_HOME/ 2>/dev/null || echo "ANDROID_HOME not accessible"
+          ls -la $ANDROID_SDK_ROOT/ 2>/dev/null || echo "ANDROID_SDK_ROOT not accessible"
+
+      - name: Create local.properties
+        working-directory: android-tv
+        run: |
+          echo "sdk.dir=$ANDROID_HOME" > local.properties
+          cat local.properties
+
+      - name: Accept SDK licenses and install components
+        run: |
+          SDKMANAGER=$(find $ANDROID_HOME -name "sdkmanager" -type f 2>/dev/null | head -1)
+          if [ -z "$SDKMANAGER" ]; then
+            SDKMANAGER=$(find $ANDROID_SDK_ROOT -name "sdkmanager" -type f 2>/dev/null | head -1)
+          fi
+          echo "Using sdkmanager: $SDKMANAGER"
+          if [ -n "$SDKMANAGER" ]; then
+            yes | $SDKMANAGER --licenses 2>&1 | tail -5
+            $SDKMANAGER "platforms;android-34" "build-tools;34.0.0" "platform-tools" 2>&1 | tail -10
+          else
+            echo "WARNING: sdkmanager not found, Gradle will download SDK components"
+          fi
 
       - name: Download and setup Gradle
         run: |
-          cd /tmp
           wget -q https://services.gradle.org/distributions/gradle-8.5-bin.zip
           unzip -q gradle-8.5-bin.zip
-          echo "/tmp/gradle-8.5/bin" >> $GITHUB_PATH
+          echo "$PWD/gradle-8.5/bin" >> $GITHUB_PATH
+          gradle --version
 
       - name: Generate Gradle Wrapper
         working-directory: android-tv
@@ -47,27 +67,4 @@ jobs:
 
       - name: Build Debug APK
         working-directory: android-tv
-        run: ./gradlew assembleDebug --stacktrace
-
-      - name: Build Release APK (unsigned)
-        working-directory: android-tv
-        run: ./gradlew assembleRelease --stacktrace
-        continue-on-error: true
-
-      - name: Find APK files
-        run: |
-          echo "=== All APK files ==="
-          find android-tv -name "*.apk" -type f -exec ls -lh {} \;
-
-      - name: Upload Debug APK
-        uses: actions/upload-artifact@v4
-        with:
-          name: ownTV-Android-TV-debug
-          path: android-tv/app/build/outputs/apk/debug/*.apk
-
-      - name: Upload Release APK
-        uses: actions/upload-artifact@v4
-        with:
-          name: ownTV-Android-TV-release-unsigned
-          path: android-tv/app/build/outputs/apk/release/*.apk
-        continue-on-error: true
+        run: ./gradlew assembleDebug --stacktrace --info
