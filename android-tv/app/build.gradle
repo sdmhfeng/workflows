@@ -41,8 +41,8 @@ android {
 
 dependencies {
     // AndroidX Leanback (TV UI framework)
-    implementation 'androidx.leanback:leanback:1.2.4'
-    implementation 'androidx.leanback:leanback-preference:1.2.4'
+    implementation 'androidx.leanback:leanback:1.2.1'
+    implementation 'androidx.leanback:leanback-preference:1.2.1'
 
     // AndroidX Core
     implementation 'androidx.core:core-ktx:1.12.0'
