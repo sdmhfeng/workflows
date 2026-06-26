@@ -83,8 +83,7 @@ class ChannelListFragment : BrowseSupportFragment() {
             return
         }
 
-        // Total channel count as subtitle
-        subtitle = resources.getString(R.string.channel_count, allChannels.size)
+        // Total channel count as subtitle (not supported in leanback 1.0.0)
 
         // Create a presenter for channel cards
         val cardPresenter = CardPresenter()
@@ -135,12 +134,6 @@ class ChannelListFragment : BrowseSupportFragment() {
                 channel.group
             } else {
                 "IPTV 直播源"
-            }
-            cardView.mainImageScaleType = ImageCardView.MAIN_IMAGE_SCALE_TYPE_CENTER_INSIDE
-
-            // Set card dimensions for TV
-            cardView.findViewById<View>(androidx.leanback.R.id.info_field)?.apply {
-                visibility = View.VISIBLE
             }
         }
 
