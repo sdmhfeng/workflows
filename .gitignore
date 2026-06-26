@@ -38,6 +38,9 @@ venv/
 *.tmp
 *.zip
 
+# Local Gradle distribution (not needed in repo, CI downloads it)
+gradle/
+
 # OS
 .DS_Store
 Thumbs.db
