@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <!-- TV screen shape -->
+    <path
+        android:fillColor="#FF2196F3"
+        android:pathData="M20,25 L88,25 C94.5,25 100,30.5 100,37 L100,80 C100,86.5 94.5,92 88,92 L20,92 C13.5,92 8,86.5 8,80 L8,37 C8,30.5 13.5,25 20,25 Z" />
+    <!-- Play triangle -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M42,45 L68,60 L42,75 Z" />
+</vector>

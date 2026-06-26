@@ -1,0 +1,63 @@
+# Build & Distribution
+dist/
+build/
+*.egg-info/
+*.egg
+
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# Generated output
+output/
+*.log
+result_new.log
+
+# Cache files
+*.pkl
+updates/multicast/multicast_region_result.json
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# Environment
+.env
+.env.*
+.venv/
+venv/
+.venv
+
+# Temp files
+*.tmp.*
+*.tmp
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Android TV build outputs
+android-tv/.gradle/
+android-tv/build/
+android-tv/app/build/
+android-tv/local.properties
+android-tv/*.apk
+android-tv/*.aab
+
+# Docker
+docker-compose.override.yml
+
+# Config user files (keep templates)
+config/user_config.ini
+config/user_demo.txt
+
+# Override global gitignore for Android XML files (required for build)
+!android-tv/**/*.xml
+!android-tv/**/*.gradle
+!android-tv/**/*.properties
+!android-tv/**/*.pro

@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#FF1A1A2E"
+    android:padding="48dp"
+    android:gravity="center_horizontal">
+
+    <!-- Title -->
+    <TextView
+        android:id="@+id/settings_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/title_settings"
+        android:textColor="#FFFFFF"
+        android:textSize="28sp"
+        android:layout_marginBottom="32dp" />
+
+    <!-- Server URL section -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/pref_server_url_desc"
+        android:textColor="#AACCCCCC"
+        android:textSize="16sp"
+        android:layout_marginBottom="8dp" />
+
+    <EditText
+        android:id="@+id/server_url_input"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="#33FFFFFF"
+        android:textColor="#FFFFFF"
+        android:textColorHint="#66FFFFFF"
+        android:hint="http://192.168.1.100:8000"
+        android:paddingStart="12dp"
+        android:paddingEnd="12dp"
+        android:textSize="16sp"
+        android:inputType="textUri"
+        android:imeOptions="actionDone"
+        android:focusable="true"
+        android:focusableInTouchMode="true" />
+
+    <!-- Action buttons -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="24dp"
+        android:gravity="center">
+
+        <Button
+            android:id="@+id/test_button"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:text="测试连接"
+            android:textSize="14sp"
+            android:layout_marginEnd="16dp"
+            android:focusable="true"
+            android:focusableInTouchMode="true" />
+
+        <Button
+            android:id="@+id/save_button"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:text="保存地址"
+            android:textSize="14sp"
+            android:focusable="true"
+            android:focusableInTouchMode="true" />
+
+    </LinearLayout>
+
+    <!-- Status text -->
+    <TextView
+        android:id="@+id/status_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:textColor="#FFCCCCCC"
+        android:textSize="14sp"
+        android:visibility="gone" />
+
+    <!-- Progress bar -->
+    <ProgressBar
+        android:id="@+id/settings_progress"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_marginTop="16dp"
+        android:indeterminate="true"
+        android:visibility="gone" />
+
+    <!-- Hint text at bottom -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="48dp"
+        android:text="按「返回」键回到频道列表\n按「菜单」键可进入设置"
+        android:textColor="#55FFFFFF"
+        android:textSize="12sp"
+        android:gravity="center" />
+
+</LinearLayout>

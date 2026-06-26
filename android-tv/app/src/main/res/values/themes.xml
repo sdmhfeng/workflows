@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Base TV theme -->
+    <style name="Theme.ownTV" parent="Theme.Leanback">
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowBackground">@android:color/black</item>
+        <item name="searchOrbViewSettings">false</item>
+        <item name="browseTitleViewStyle">@style/BrowseTitle</item>
+        <item name="defaultBrandColor">#FF2196F3</item>
+        <item name="defaultBrandColorDark">#FF1976D2</item>
+    </style>
+
+    <!-- Playback theme (full screen, no decorations) -->
+    <style name="Theme.ownTV.Playback" parent="Theme.Leanback">
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowBackground">@android:color/black</item>
+    </style>
+
+    <!-- Browse title style -->
+    <style name="BrowseTitle" parent="Widget.Leanback.BrowseTitleView">
+        <item name="android:textColor">#FFFFFF</item>
+    </style>
+</resources>
