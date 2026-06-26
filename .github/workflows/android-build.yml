@@ -28,24 +28,38 @@ jobs:
       - name: Setup Android SDK
         uses: android-actions/setup-android@v3
 
-      - name: Setup Gradle
-        uses: gradle/actions/setup-gradle@v3
-        with:
-          build-root-directory: android-tv
-          gradle-version: 8.5
+      - name: Install required Android SDK packages
+        run: |
+          yes | ${ANDROID_SDK_ROOT}/cmdline-tools/latest/bin/sdkmanager --licenses 2>/dev/null || true
+          ${ANDROID_SDK_ROOT}/cmdline-tools/latest/bin/sdkmanager \
+            "platforms;android-34" \
+            "build-tools;34.0.0" \
+            "platform-tools" \
+            2>/dev/null || true
+
+      - name: Download and setup Gradle
+        run: |
+          cd /tmp
+          wget -q https://services.gradle.org/distributions/gradle-8.5-bin.zip
+          unzip -q gradle-8.5-bin.zip
+          echo "/tmp/gradle-8.5/bin" >> $GITHUB_PATH
+
+      - name: Generate Gradle Wrapper
+        working-directory: android-tv
+        run: gradle wrapper --gradle-version 8.5
 
       - name: Build Debug APK
-        run: cd android-tv && gradle assembleDebug --stacktrace
+        working-directory: android-tv
+        run: ./gradlew assembleDebug --stacktrace
 
       - name: Build Release APK (unsigned)
-        run: cd android-tv && gradle assembleRelease --stacktrace
+        working-directory: android-tv
+        run: ./gradlew assembleRelease --stacktrace
         continue-on-error: true
 
-      - name: List APK files
+      - name: Find APK files
         run: |
-          echo "=== Debug APKs ==="
-          find android-tv -name "*.apk" -type f
-          echo "=== File sizes ==="
+          echo "=== All APK files ==="
           find android-tv -name "*.apk" -type f -exec ls -lh {} \;
 
       - name: Upload Debug APK
