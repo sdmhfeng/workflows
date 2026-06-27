@@ -105,6 +105,23 @@ jobs:
         working-directory: android-tv
         run: gradle wrapper --gradle-version 8.5
 
+      - name: Generate signing keystore
+        run: |
+          keytool -genkey -v \
+            -keystore android-tv/release.jks \
+            -alias owntv \
+            -keyalg RSA \
+            -keysize 2048 \
+            -validity 10000 \
+            -storepass owntv123 \
+            -keypass owntv123 \
+            -dname "CN=ownTV, OU=ownTV, O=ownTV, L=Beijing, ST=Beijing, C=CN" \
+            -noprompt
+          echo "KEYSTORE_FILE=release.jks" >> $GITHUB_ENV
+          echo "KEYSTORE_PASSWORD=owntv123" >> $GITHUB_ENV
+          echo "KEY_ALIAS=owntv" >> $GITHUB_ENV
+          echo "KEY_PASSWORD=owntv123" >> $GITHUB_ENV
+
       - name: Build Release APK
         working-directory: android-tv
         run: ./gradlew assembleRelease --stacktrace
