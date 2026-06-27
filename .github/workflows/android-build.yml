@@ -107,8 +107,9 @@ jobs:
 
       - name: Generate signing keystore
         run: |
+          KEYSTORE_PATH="$PWD/android-tv/app/release.jks"
           keytool -genkey -v \
-            -keystore android-tv/release.jks \
+            -keystore "$KEYSTORE_PATH" \
             -alias owntv \
             -keyalg RSA \
             -keysize 2048 \
@@ -117,7 +118,7 @@ jobs:
             -keypass owntv123 \
             -dname "CN=ownTV, OU=ownTV, O=ownTV, L=Beijing, ST=Beijing, C=CN" \
             -noprompt
-          echo "KEYSTORE_FILE=release.jks" >> $GITHUB_ENV
+          echo "KEYSTORE_FILE=$KEYSTORE_PATH" >> $GITHUB_ENV
           echo "KEYSTORE_PASSWORD=owntv123" >> $GITHUB_ENV
           echo "KEY_ALIAS=owntv" >> $GITHUB_ENV
           echo "KEY_PASSWORD=owntv123" >> $GITHUB_ENV
