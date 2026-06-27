@@ -24,6 +24,7 @@ class MainActivity : FragmentActivity() {
     private lateinit var apiClient: ApiClient
     private var channels: List<Channel> = emptyList()
     private var isDataLoaded = false
+    private var localServer: LocalServer? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,11 +32,31 @@ class MainActivity : FragmentActivity() {
 
         apiClient = ApiClient(this)
 
+        // Start the embedded HTTP server that serves bundled M3U data.
+        // The app connects to this local server to get channel lists,
+        // making the APK fully self-contained.
+        startLocalServer()
+
         if (savedInstanceState == null) {
             showChannelListFragment()
         }
 
         loadChannels()
+    }
+
+    /**
+     * Starts the embedded NanoHTTPD server on a background thread.
+     * This server serves the bundled M3U/TXT channel data from assets.
+     */
+    private fun startLocalServer() {
+        localServer = LocalServer(this, LocalServer.DEFAULT_PORT).apply {
+            try {
+                start()
+                Log.d(TAG, "Local server started on port $DEFAULT_PORT")
+            } catch (e: Exception) {
+                Log.e(TAG, "Failed to start local server", e)
+            }
+        }
     }
 
     /**
@@ -149,5 +170,11 @@ class MainActivity : FragmentActivity() {
         if (isDataLoaded) {
             refreshChannels()
         }
+    }
+
+    override fun onDestroy() {
+        localServer?.stop()
+        localServer = null
+        super.onDestroy()
     }
 }

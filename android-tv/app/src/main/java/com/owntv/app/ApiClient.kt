@@ -19,7 +19,7 @@ class ApiClient(context: Context) {
         private const val TAG = "ApiClient"
         private const val PREF_NAME = "owntv_prefs"
         private const val KEY_SERVER_URL = "server_url"
-        private const val DEFAULT_SERVER_URL = "http://192.168.1.100:8000"
+        private const val DEFAULT_SERVER_URL = "http://127.0.0.1:8080"
         private const val CONNECT_TIMEOUT = 10L
         private const val READ_TIMEOUT = 30L
     }

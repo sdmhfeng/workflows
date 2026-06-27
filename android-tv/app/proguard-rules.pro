@@ -18,3 +18,7 @@
 
 # Keep data classes
 -keep class com.owntv.app.Channel { *; }
+
+# Keep NanoHTTPD
+-keep class fi.iki.elonen.** { *; }
+-dontwarn fi.iki.elonen.**
