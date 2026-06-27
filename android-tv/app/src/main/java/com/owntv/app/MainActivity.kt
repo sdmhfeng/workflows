@@ -52,7 +52,7 @@ class MainActivity : FragmentActivity() {
         localServer = LocalServer(this, LocalServer.DEFAULT_PORT).apply {
             try {
                 start()
-                Log.d(TAG, "Local server started on port $DEFAULT_PORT")
+                Log.d(TAG, "Local server started on port ${LocalServer.DEFAULT_PORT}")
             } catch (e: Exception) {
                 Log.e(TAG, "Failed to start local server", e)
             }
